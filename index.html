@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pokédex (Static)</title>
+  <title>Pokédex</title>
   <link rel="stylesheet" href="index.css">
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
@@ -11,57 +11,37 @@
 
 <div class="pokedex">
 
-  <!-- Top lights -->
   <div class="top-bar">
     <div class="light blue"></div>
     <div class="light green"></div>
     <div class="light yellow"></div>
   </div>
 
-  <!-- Screen -->
   <div class="screen">
 
-    <!-- Search (non-functional placeholder) -->
     <div class="search-box">
       <label>SEARCH POKéMON:</label>
-      <input placeholder="Name or ID">
-      <button>SEARCH</button>
+      <input id="searchInput" placeholder="Name or ID">
+      <button onclick="searchPokemon()">SEARCH</button>
     </div>
 
-    <!-- Display -->
     <div class="display">
-
-      <!-- Sprite placeholder -->
       <div class="sprite-box">
-        <img src="https://via.placeholder.com/100" alt="Pokemon sprite">
+        <img id="sprite" src="">
       </div>
 
-      <!-- Info placeholders -->
-      <div class="info" id="data-container">
-        <div>NAME: PIKACHU</div>
-        <div>TYPE: ELECTRIC</div>
-        <div>ABILITY: STATIC</div>
+      <div class="info">
+        <div id="name">NAME: ---</div>
+        <div id="type">TYPE: ---</div>
+        <div id="ability">ABILITY: ---</div>
       </div>
-
     </div>
 
-    <!-- Stats placeholder -->
-    <div class="stats" id="stats-container">
-      <strong>STATS</strong><br>
-      HP: ███████<br>
-      ATTACK: █████<br>
-      DEFENSE: ████<br>
-      SPEED: ████████
-    </div>
-
-    <!-- Evolution placeholder -->
-    <div class="evolution" id="evolution-container">
-      EVOLUTION: PICHU → PIKACHU → RAICHU
-    </div>
+    <div class="stats" id="stats"></div>
+    <div class="evolution" id="evolution"></div>
 
   </div>
 
-  <!-- Controls -->
   <div class="controls">
     <div class="dpad"></div>
     <div class="buttons">
@@ -72,5 +52,6 @@
 
 </div>
 
+<script src="index.js"></script>
 </body>
 </html>
