@@ -260,3 +260,42 @@ button:active {
 
 .red { background: red; }
 .bluebtn { background: blue; }
+
+/* Stats: progress bar styles (improved visibility) */
+.stats { margin-top: 10px; }
+.stat { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.stat-label { width: 110px; font-size: 14px; color: #222; }
+.stat-bar {
+  flex: 1;
+  height: 12px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.stat-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #388E3C; /* stronger default (dark green) */
+  transition: width 700ms cubic-bezier(.2,.8,.2,1);
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.18);
+}
+.stat-value { width: 36px; text-align: right; font-weight: bold; color: #111; }
+
+/* More saturated per-type fills for visibility */
+.screen.type-fire .stat-fill    { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #FF5722; }
+.screen.type-water .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #1976D2; }
+.screen.type-grass .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #2E7D32; }
+.screen.type-electric .stat-fill{ background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #FBC02D; }
+.screen.type-psychic .stat-fill { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #8E24AA; }
+.screen.type-rock .stat-fill, .screen.type-ground .stat-fill { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #6D4C41; }
+.screen.type-flying .stat-fill  { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #1976D2; }
+.screen.type-bug .stat-fill     { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #7CB342; }
+.screen.type-poison .stat-fill  { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #8E24AA; }
+.screen.type-dragon .stat-fill  { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #0288D1; }
+.screen.type-ice .stat-fill     { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #039BE5; }
+.screen.type-normal .stat-fill  { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #757575; }
+.screen.type-fairy .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #EC407A; }
+.screen.type-ghost .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #607D8B; }
+.screen.type-steel .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #546E7A; }

@@ -55,12 +55,46 @@ async function searchPokemon() {
 
     // Stats
     const statsDiv = document.getElementById('stats');
-    statsDiv.innerHTML = "<strong>STATS</strong><br>";
+    statsDiv.innerHTML = "<strong>STATS</strong>";
 
+    // Use progress bars for each stat (animated fill). Scale base_stat to a 0-150 range for percent.
     data.stats.forEach(stat => {
-      const value = Math.floor(stat.base_stat / 10);
-      statsDiv.innerHTML +=
-        `${stat.stat.name.toUpperCase()}: ${"█".repeat(value)}<br>`;
+      const base = stat.base_stat;
+      const percent = Math.min(100, Math.round((base / 150) * 100));
+
+      const row = document.createElement('div');
+      row.className = 'stat';
+
+      const label = document.createElement('div');
+      label.className = 'stat-label';
+      label.innerText = stat.stat.name.toUpperCase();
+
+      const bar = document.createElement('div');
+      bar.className = 'stat-bar';
+
+      const fill = document.createElement('div');
+      fill.className = 'stat-fill';
+      fill.setAttribute('role', 'progressbar');
+      fill.setAttribute('aria-valuemin', '0');
+      fill.setAttribute('aria-valuemax', '150');
+      fill.setAttribute('aria-valuenow', String(base));
+      // set width to 0 first so CSS transition animates
+      fill.style.width = '0%';
+
+      const value = document.createElement('div');
+      value.className = 'stat-value';
+      value.innerText = base;
+
+      bar.appendChild(fill);
+      row.appendChild(label);
+      row.appendChild(bar);
+      row.appendChild(value);
+      statsDiv.appendChild(row);
+
+      // Trigger the animated fill on the next frame
+      requestAnimationFrame(() => {
+        fill.style.width = percent + '%';
+      });
     });
 
     // Evolution Chain
