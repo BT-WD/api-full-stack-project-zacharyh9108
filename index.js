@@ -30,8 +30,15 @@ async function searchPokemon() {
     document.getElementById('ability').innerText =
       "ABILITY: " + data.abilities.map(a => a.ability.name.toUpperCase()).join(', ');
 
-    document.getElementById('sprite').src =
-      data.sprites.front_default || "";
+    const spriteEl = document.getElementById('sprite');
+    // prefer official artwork, then front_default, else empty
+    const officialArt = data.sprites && data.sprites.other && data.sprites.other['official-artwork'] && data.sprites.other['official-artwork'].front_default;
+    spriteEl.src = officialArt || (data.sprites && data.sprites.front_default) || '';
+    spriteEl.alt = data.name ? data.name : 'pokemon sprite';
+    // subtle fade-in for a polished feel
+    spriteEl.style.opacity = '0';
+    spriteEl.style.transition = 'opacity 300ms ease';
+    requestAnimationFrame(() => { spriteEl.style.opacity = '1'; });
 
     // Apply type theme to screen (supports many types)
     const screenEl = document.querySelector('.screen');

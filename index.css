@@ -154,6 +154,16 @@ body {
   transition: background 300ms ease, border-color 300ms ease;
 }
 
+.sprite-box img {
+  width: 96px; /* slightly smaller than the container */
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: transform 180ms ease, opacity 300ms ease;
+}
+
 .screen.type-fire .sprite-box { background: rgba(255,160,80,0.12); border-color: rgba(191,54,12,0.8); }
 .screen.type-water .sprite-box { background: rgba(33,150,243,0.08); border-color: rgba(21,101,192,0.8); }
 .screen.type-grass .sprite-box { background: rgba(102,187,106,0.08); border-color: rgba(46,125,50,0.8); }
