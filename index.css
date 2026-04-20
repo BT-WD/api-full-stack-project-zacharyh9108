@@ -47,7 +47,128 @@ body {
   padding: 15px;
   border-radius: 10px;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  transition: background 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
+
+/* Type theme variants */
+.screen.type-fire {
+  background: linear-gradient(135deg, #FFE0B2, #FF7043); /* warm orange */
+  border-color: #BF360C;
+  box-shadow: inset 0 0 20px rgba(255,111,0,0.15);
+}
+
+.screen.type-water {
+  background: linear-gradient(135deg, #BBDEFB, #42A5F5); /* blue */
+  border-color: #1565C0;
+  box-shadow: inset 0 0 20px rgba(33,150,243,0.12);
+}
+
+.screen.type-grass {
+  background: linear-gradient(135deg, #E8F5E9, #66BB6A); /* green */
+  border-color: #2E7D32;
+  box-shadow: inset 0 0 20px rgba(102,187,106,0.12);
+}
+
+/* Extended type themes */
+.screen.type-electric {
+  background: linear-gradient(135deg, #FFF8E1, #FFEE58);
+  border-color: #F9A825;
+  box-shadow: inset 0 0 20px rgba(255,238,88,0.12);
+}
+
+.screen.type-psychic {
+  background: linear-gradient(135deg, #F3E5F5, #CE93D8);
+  border-color: #6A1B9A;
+  box-shadow: inset 0 0 20px rgba(156,39,176,0.08);
+}
+
+.screen.type-rock, .screen.type-ground {
+  background: linear-gradient(135deg, #EFEBE9, #A1887F);
+  border-color: #5D4037;
+  box-shadow: inset 0 0 20px rgba(121,85,72,0.08);
+}
+
+.screen.type-flying {
+  background: linear-gradient(135deg, #E3F2FD, #90CAF9);
+  border-color: #0277BD;
+  box-shadow: inset 0 0 20px rgba(33,150,243,0.06);
+}
+
+.screen.type-bug {
+  background: linear-gradient(135deg, #F1F8E9, #C5E1A5);
+  border-color: #7CB342;
+  box-shadow: inset 0 0 20px rgba(124,179,66,0.06);
+}
+
+.screen.type-poison {
+  background: linear-gradient(135deg, #F3E5F5, #CE93D8);
+  border-color: #6A1B9A;
+  box-shadow: inset 0 0 20px rgba(123,31,162,0.06);
+}
+
+.screen.type-dragon {
+  background: linear-gradient(135deg, #E1F5FE, #81D4FA);
+  border-color: #01579B;
+  box-shadow: inset 0 0 20px rgba(3,169,244,0.06);
+}
+
+.screen.type-ice {
+  background: linear-gradient(135deg, #E0F7FA, #B3E5FC);
+  border-color: #0288D1;
+  box-shadow: inset 0 0 20px rgba(3,169,244,0.06);
+}
+
+.screen.type-normal {
+  background: linear-gradient(135deg, #F5F5F5, #E0E0E0);
+  border-color: #9E9E9E;
+  box-shadow: inset 0 0 20px rgba(158,158,158,0.05);
+}
+
+.screen.type-fairy {
+  background: linear-gradient(135deg, #FFF3E0, #F8BBD0);
+  border-color: #AD1457;
+  box-shadow: inset 0 0 20px rgba(255,138,101,0.06);
+}
+
+.screen.type-ghost {
+  background: linear-gradient(135deg, #ECEFF1, #B0BEC5);
+  border-color: #455A64;
+  box-shadow: inset 0 0 20px rgba(69,90,100,0.06);
+}
+
+.screen.type-steel {
+  background: linear-gradient(135deg, #ECEFF1, #CFD8DC);
+  border-color: #37474F;
+  box-shadow: inset 0 0 20px rgba(158,158,158,0.06);
+}
+
+/* Slight accent for sprite and info to match themes */
+.sprite-box {
+  width: 120px;
+  height: 120px;
+  border: 4px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eee;
+  transition: background 300ms ease, border-color 300ms ease;
+}
+
+.screen.type-fire .sprite-box { background: rgba(255,160,80,0.12); border-color: rgba(191,54,12,0.8); }
+.screen.type-water .sprite-box { background: rgba(33,150,243,0.08); border-color: rgba(21,101,192,0.8); }
+.screen.type-grass .sprite-box { background: rgba(102,187,106,0.08); border-color: rgba(46,125,50,0.8); }
+.screen.type-electric .sprite-box { background: rgba(255,238,88,0.08); border-color: rgba(249,168,37,0.8); }
+.screen.type-psychic .sprite-box { background: rgba(206,93,216,0.08); border-color: rgba(106,27,154,0.8); }
+.screen.type-rock .sprite-box, .screen.type-ground .sprite-box { background: rgba(161,136,119,0.08); border-color: rgba(93,109,115,0.8); }
+.screen.type-flying .sprite-box { background: rgba(144,202,249,0.08); border-color: rgba(2,119,189,0.8); }
+.screen.type-bug .sprite-box { background: rgba(197,225,165,0.08); border-color: rgba(124,179,66,0.8); }
+.screen.type-poison .sprite-box { background: rgba(206,93,216,0.08); border-color: rgba(106,27,154,0.8); }
+.screen.type-dragon .sprite-box { background: rgba(129,212,250,0.08); border-color: rgba(1,87,155,0.8); }
+.screen.type-ice .sprite-box { background: rgba(179,230,252,0.08); border-color: rgba(2,136,209,0.8); }
+.screen.type-normal .sprite-box { background: rgba(224,224,224,0.08); border-color: rgba(158,158,158,0.8); }
+.screen.type-fairy .sprite-box { background: rgba(255,138,101,0.08); border-color: rgba(173,20,87,0.8); }
+.screen.type-ghost .sprite-box { background: rgba(176,190,197,0.08); border-color: rgba(69,90,100,0.8); }
+.screen.type-steel .sprite-box { background: rgba(207,216,220,0.08); border-color: rgba(55,71,79,0.8); }
 
 /* Search */
 .search-box {
@@ -89,10 +210,6 @@ button:active {
   justify-content: center;
   align-items: center;
   background: #eee;
-}
-
-.sprite-box img {
-  width: 100px;
 }
 
 /* Info */

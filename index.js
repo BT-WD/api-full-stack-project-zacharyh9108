@@ -33,6 +33,26 @@ async function searchPokemon() {
     document.getElementById('sprite').src =
       data.sprites.front_default || "";
 
+    // Apply type theme to screen (supports many types)
+    const screenEl = document.querySelector('.screen');
+    if (screenEl) {
+      // list of supported type classes
+      const supported = [
+        'type-fire','type-water','type-grass','type-electric','type-psychic',
+        'type-rock','type-ground','type-flying','type-bug','type-poison',
+        'type-dragon','type-ice','type-normal','type-fairy','type-ghost','type-steel'
+      ];
+
+      // remove any previous type classes
+      screenEl.classList.remove(...supported);
+
+      const primaryType = data.types && data.types.length ? data.types[0].type.name.toLowerCase() : '';
+      const candidate = 'type-' + primaryType;
+      if (supported.includes(candidate)) {
+        screenEl.classList.add(candidate);
+      }
+    }
+
     // Stats
     const statsDiv = document.getElementById('stats');
     statsDiv.innerHTML = "<strong>STATS</strong><br>";
@@ -86,5 +106,15 @@ async function searchPokemon() {
     document.getElementById('sprite').src = "";
     document.getElementById('stats').innerHTML = "";
     document.getElementById('evolution').innerText = "";
+
+    // Remove any applied type theme
+    const screenEl = document.querySelector('.screen');
+    if (screenEl) screenEl.classList.remove('type-fire', 'type-water', 'type-grass');
   }
 }
+
+document.getElementById('searchInput').addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    searchPokemon();
+  }
+});
