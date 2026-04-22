@@ -30,15 +30,11 @@ async function searchPokemon() {
     document.getElementById('ability').innerText =
       "ABILITY: " + data.abilities.map(a => a.ability.name.toUpperCase()).join(', ');
 
+    // replace direct sprite logic with helper and remember data
+    lastData = data;
+    updateSpriteForData(data);
     const spriteEl = document.getElementById('sprite');
-    // prefer official artwork, then front_default, else empty
-    const officialArt = data.sprites && data.sprites.other && data.sprites.other['official-artwork'] && data.sprites.other['official-artwork'].front_default;
-    spriteEl.src = officialArt || (data.sprites && data.sprites.front_default) || '';
-    spriteEl.alt = data.name ? data.name : 'pokemon sprite';
-    // subtle fade-in for a polished feel
-    spriteEl.style.opacity = '0';
-    spriteEl.style.transition = 'opacity 300ms ease';
-    requestAnimationFrame(() => { spriteEl.style.opacity = '1'; });
+    if (spriteEl) spriteEl.style.transition = 'opacity 300ms ease';
 
     // Apply type theme to screen (supports many types)
     const screenEl = document.querySelector('.screen');
@@ -309,6 +305,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!view.classList.contains('hidden')) renderFavorites();
   });
 
+  // shiny toggle wiring
+  const shinyToggle = document.getElementById('shinyToggle');
+  if (shinyToggle) {
+    shinyToggle.addEventListener('click', () => {
+      useShiny = !useShiny;
+      shinyToggle.innerText = useShiny ? 'SHINY' : 'NORMAL';
+      // update currently displayed sprite without refetching
+      if (lastData) updateSpriteForData(lastData);
+    });
+    // initialize label
+    shinyToggle.innerText = useShiny ? 'SHINY' : 'NORMAL';
+  }
+
   renderFavorites();
 });
 
@@ -323,3 +332,40 @@ function randomPokemon() {
   document.getElementById('searchInput').value = String(id);
   searchPokemon();
 }
+
+let useShiny = false;
+let lastData = null;
+
+function updateSpriteForData(data) {
+  const spriteEl = document.getElementById('sprite');
+  if (!spriteEl || !data) return;
+
+  const sprites = data.sprites || {};
+
+  const src = useShiny
+    ? sprites.front_shiny
+    : sprites.front_default;
+
+  spriteEl.src = src || '';
+  spriteEl.alt = data.name || 'pokemon sprite';
+
+  spriteEl.style.opacity = '0';
+  requestAnimationFrame(() => {
+    spriteEl.style.opacity = '1';
+  });
+}
+
+// Toggle shiny sprite display
+document.getElementById('toggleShiny').addEventListener('click', () => {
+  useShiny = !useShiny;
+  const currentName = document.getElementById('name').innerText.replace('NAME: ', '').toLowerCase();
+  if (currentName) {
+    // refetch the current pokemon data to update sprite
+    fetch(`https://pokeapi.co/api/v2/pokemon/${currentName}`)
+      .then(res => res.json())
+      .then(data => {
+        updateSpriteForData(data);
+      })
+      .catch(err => console.error('Error fetching Pokémon data:', err));
+  }
+});
