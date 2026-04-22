@@ -317,3 +317,9 @@ document.getElementById('searchInput').addEventListener('keypress', function (e)
     searchPokemon();
   }
 });
+
+function randomPokemon() {
+  const id = Math.floor(Math.random() * 1025) + 1;
+  document.getElementById('searchInput').value = String(id);
+  searchPokemon();
+}

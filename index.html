@@ -22,9 +22,10 @@
   <div class="screen">
 
     <div class="search-box">
-      <label>SEARCH POKéMON:</label>
+      <label>SEARCH POKEMON BY NAME OR ID:</label>
       <input id="searchInput" placeholder="Name or ID" autocomplete="off">
       <button onclick="searchPokemon()">SEARCH</button>
+      <button id="randomBtn" class="random-btn" onclick="randomPokemon()" title="Random Pokémon">RANDOM</button>
       <!-- Autocomplete suggestions -->
       <div id="suggestions" class="suggestions hidden" aria-live="polite"></div>
     </div>
