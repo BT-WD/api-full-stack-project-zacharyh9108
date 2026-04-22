@@ -135,6 +135,9 @@ async function searchPokemon() {
     document.getElementById('evolution').innerText =
       "EVOLUTION: " + chain.join(" → ");
 
+    // Favorites logic
+    updateFavButton(data.name);
+
   } catch (err) {
     console.error("Error fetching Pokémon:", err);
 
@@ -153,6 +156,89 @@ async function searchPokemon() {
     if (screenEl) screenEl.classList.remove('type-fire', 'type-water', 'type-grass');
   }
 }
+
+// Favorites utility
+const FAV_KEY = 'pokedex_favorites_v1';
+function loadFavorites() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function saveFavorites(list) { localStorage.setItem(FAV_KEY, JSON.stringify(list)); }
+
+function isFavorited(name) {
+  const favs = loadFavorites();
+  return favs.some(f => f.name === name);
+}
+
+function updateFavButton(name) {
+  const btn = document.getElementById('favBtn');
+  if (!btn) return;
+  if (isFavorited(name)) { btn.innerText = '★'; btn.title = 'Remove from favorites'; }
+  else { btn.innerText = '☆'; btn.title = 'Save to favorites'; }
+}
+
+function toggleFavorite(current) {
+  if (!current || !current.name) return;
+  const favs = loadFavorites();
+  const idx = favs.findIndex(f => f.name === current.name);
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+  } else {
+    // store minimal info
+    favs.push({ name: current.name, sprite: current.sprite, types: current.types });
+  }
+  saveFavorites(favs);
+  updateFavButton(current.name);
+  renderFavorites();
+}
+
+function renderFavorites() {
+  const view = document.getElementById('favoritesView');
+  if (!view) return;
+  const favs = loadFavorites();
+  if (!favs.length) {
+    view.innerHTML = '<em>No favorites yet</em>';
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'fav-list';
+  favs.forEach(f => {
+    const it = document.createElement('div');
+    it.className = 'fav-item';
+    it.innerHTML = `<img src="${f.sprite}" alt="${f.name}"><div>${f.name.toUpperCase()}</div>`;
+    it.addEventListener('click', () => {
+      document.getElementById('searchInput').value = f.name;
+      searchPokemon();
+    });
+    list.appendChild(it);
+  });
+  view.innerHTML = '';
+  view.appendChild(list);
+}
+
+// Wire favorites UI
+document.addEventListener('DOMContentLoaded', () => {
+  const favBtn = document.getElementById('favBtn');
+  const showFavsBtn = document.getElementById('showFavsBtn');
+  if (favBtn) favBtn.addEventListener('click', () => {
+    // read current displayed name
+    const nameEl = document.getElementById('name');
+    const typeEl = document.getElementById('type');
+    const spriteEl = document.getElementById('sprite');
+    const currentName = nameEl && nameEl.innerText.replace('NAME: ', '').toLowerCase();
+    const currentTypes = typeEl && typeEl.innerText.replace('TYPE: ', '').split(',').map(s => s.trim().toLowerCase());
+    toggleFavorite({ name: currentName, sprite: spriteEl.src, types: currentTypes });
+  });
+
+  if (showFavsBtn) showFavsBtn.addEventListener('click', () => {
+    const view = document.getElementById('favoritesView');
+    if (!view) return;
+    view.classList.toggle('hidden');
+    if (!view.classList.contains('hidden')) renderFavorites();
+  });
+
+  renderFavorites();
+});
 
 document.getElementById('searchInput').addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {

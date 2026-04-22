@@ -309,3 +309,34 @@ button:active {
 .screen.type-fairy .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #EC407A; }
 .screen.type-ghost .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #607D8B; }
 .screen.type-steel .stat-fill   { background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), #546E7A; }
+
+/* Favorites UI */
+.show-favs-btn {
+  margin-left: 10px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.06);
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.fav-btn {
+  margin-top: 8px;
+  padding: 6px 8px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.favorites {
+  margin-top: 12px;
+  border-top: 1px dashed rgba(0,0,0,0.12);
+  padding-top: 8px;
+}
+
+.favorites.hidden { display: none; }
+
+.fav-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.fav-item { width: 80px; text-align: center; font-size: 12px; }
+.fav-item img { width: 64px; height: 64px; object-fit: contain; display:block; margin:0 auto 4px; }

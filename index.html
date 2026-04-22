@@ -15,6 +15,8 @@
     <div class="light blue"></div>
     <div class="light green"></div>
     <div class="light yellow"></div>
+    <!-- Button to toggle favorites view -->
+    <button id="showFavsBtn" class="show-favs-btn" title="Show favorites">Favorites ★</button>
   </div>
 
   <div class="screen">
@@ -34,11 +36,16 @@
         <div id="name">NAME: ---</div>
         <div id="type">TYPE: ---</div>
         <div id="ability">ABILITY: ---</div>
+        <!-- Favorite toggle -->
+        <button id="favBtn" class="fav-btn" title="Save to favorites">☆</button>
       </div>
     </div>
 
     <div class="stats" id="stats"></div>
     <div class="evolution" id="evolution"></div>
+
+    <!-- Favorites view (hidden by default) -->
+    <div id="favoritesView" class="favorites hidden"></div>
 
   </div>
 
