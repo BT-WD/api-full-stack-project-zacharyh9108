@@ -23,8 +23,10 @@
 
     <div class="search-box">
       <label>SEARCH POKéMON:</label>
-      <input id="searchInput" placeholder="Name or ID">
+      <input id="searchInput" placeholder="Name or ID" autocomplete="off">
       <button onclick="searchPokemon()">SEARCH</button>
+      <!-- Autocomplete suggestions -->
+      <div id="suggestions" class="suggestions hidden" aria-live="polite"></div>
     </div>
 
     <div class="display">

@@ -340,3 +340,22 @@ button:active {
 .fav-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .fav-item { width: 80px; text-align: center; font-size: 12px; }
 .fav-item img { width: 64px; height: 64px; object-fit: contain; display:block; margin:0 auto 4px; }
+
+/* Suggestions/autocomplete */
+.suggestions {
+  margin-top: 6px;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  max-height: 160px;
+  overflow: auto;
+}
+.suggestions.hidden { display: none; }
+.suggestion-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.suggestion-item:hover, .suggestion-item.active {
+  background: rgba(0,0,0,0.08);
+}

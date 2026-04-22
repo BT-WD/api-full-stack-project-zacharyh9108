@@ -216,6 +216,78 @@ function renderFavorites() {
   view.appendChild(list);
 }
 
+// Autocomplete: load all Pokémon names on startup (cache)
+let POKEMON_LIST = null;
+async function loadPokemonList() {
+  if (POKEMON_LIST) return POKEMON_LIST;
+  try {
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=2000');
+    const d = await res.json();
+    POKEMON_LIST = d.results.map(r => r.name);
+    return POKEMON_LIST;
+  } catch (e) {
+    console.warn('Failed to load pokemon list for autocomplete', e);
+    POKEMON_LIST = [];
+    return POKEMON_LIST;
+  }
+}
+
+const suggestionsEl = document.getElementById('suggestions');
+const searchInput = document.getElementById('searchInput');
+let suggestionIndex = -1;
+
+function renderSuggestions(matches) {
+  if (!suggestionsEl) return;
+  suggestionsEl.innerHTML = '';
+  if (!matches || !matches.length) { suggestionsEl.classList.add('hidden'); return; }
+  matches.slice(0, 10).forEach((name, i) => {
+    const it = document.createElement('div');
+    it.className = 'suggestion-item';
+    it.innerText = name;
+    it.addEventListener('click', () => {
+      searchInput.value = name;
+      suggestionsEl.classList.add('hidden');
+      searchPokemon();
+    });
+    suggestionsEl.appendChild(it);
+  });
+  suggestionIndex = -1;
+  suggestionsEl.classList.remove('hidden');
+}
+
+searchInput.addEventListener('input', async function (e) {
+  const q = (this.value || '').trim().toLowerCase();
+  if (!q) { renderSuggestions([]); return; }
+  const list = await loadPokemonList();
+  const matches = list.filter(n => n.includes(q)).slice(0, 50);
+  renderSuggestions(matches);
+});
+
+searchInput.addEventListener('keydown', function (e) {
+  const items = suggestionsEl ? Array.from(suggestionsEl.querySelectorAll('.suggestion-item')) : [];
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    suggestionIndex = Math.min(items.length - 1, suggestionIndex + 1);
+    items.forEach((it, idx) => it.classList.toggle('active', idx === suggestionIndex));
+    if (items[suggestionIndex]) items[suggestionIndex].scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    suggestionIndex = Math.max(0, suggestionIndex - 1);
+    items.forEach((it, idx) => it.classList.toggle('active', idx === suggestionIndex));
+    if (items[suggestionIndex]) items[suggestionIndex].scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'Enter') {
+    if (suggestionIndex >= 0 && items[suggestionIndex]) {
+      e.preventDefault();
+      const name = items[suggestionIndex].innerText;
+      searchInput.value = name;
+      renderSuggestions([]);
+      searchPokemon();
+    }
+  } else if (e.key === 'Escape') {
+    renderSuggestions([]);
+  }
+});
+
 // Wire favorites UI
 document.addEventListener('DOMContentLoaded', () => {
   const favBtn = document.getElementById('favBtn');
